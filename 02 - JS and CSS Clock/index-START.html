@@ -78,25 +78,22 @@
     var secondHand = document.querySelector('.second-hand');
     var minHand = document.querySelector('.min-hand');
     var hourHand = document.querySelector('.hour-hand');
-
-    setInterval(
-      function(){
-        var time = new Date();
-        var seconds = time.getSeconds();  
-        var minutes = time.getMinutes();  
-        var hours = time.getHours();
+    function setClock(){
+        let time = new Date();
+        let seconds = time.getSeconds();  
+        let minutes = time.getMinutes();  
+        let hours = time.getHours();
         hours = hours > 12 ? hours - 12 : hours;
         
-        var secondsDegree = seconds * 6 + 90;
-        var minutesDegree = minutes * 6 + 90;
-        var hoursDegree = hours * 30 + 90;
+        let secondsDegree = seconds * 6 + 90;
+        let minutesDegree = minutes * 6 + 90;
+        let hoursDegree = hours * 30 + 90;
 
         secondHand.style.transform = `rotate(${secondsDegree}deg)`;
         minHand.style.transform = `rotate(${minutesDegree}deg)`;
         hourHand.style.transform = `rotate(${hoursDegree}deg)`;        
-      },
-      1000
-    );
+    }
+    setInterval(setClock,1000);
   </script>
 </body>
 </html>
