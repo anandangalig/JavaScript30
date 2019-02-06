@@ -21,6 +21,20 @@
   <img src="https://source.unsplash.com/7bwQXzbF6KE/800x500">
 
   <style>
+    :root {
+      --spacing: 10px;
+      --blur: 1px;
+      --base: #ffc600;
+    }
+    img {
+      padding: var(--spacing);
+      filter: blur(var(--blur));
+      background: var(--base);
+    }
+    .hl {
+      color: var(--base);
+    }
+
 
     /*
       misc styles, nothing to do with CSS variables
@@ -45,6 +59,22 @@
   </style>
 
   <script>
+      {
+        let inputElements = document.querySelectorAll(".controls input");
+        function applyChange(){
+          // let dataAttribute = this.dataset.sizing || ''; 
+          // this will work too
+          let dataAttribute = this.dataset.sizing?this.dataset.sizing:'';
+          let changedValue = this.value;
+          let name = this.name; // the input element name and the CSS vars were matched on purpose!
+          // document.documentElement returns the Element that is the root element of the document   
+          document.documentElement.style.setProperty('--'+name, changedValue + dataAttribute);
+        }
+        
+        inputElements.forEach(function(element){
+          element.addEventListener('input', applyChange);
+        });
+      }
   </script>
 
 </body>
