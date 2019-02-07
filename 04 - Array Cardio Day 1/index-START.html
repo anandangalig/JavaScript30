@@ -29,23 +29,76 @@
 
     const people = ['Beck, Glenn', 'Becker, Carl', 'Beckett, Samuel', 'Beddoes, Mick', 'Beecher, Henry', 'Beethoven, Ludwig', 'Begin, Menachem', 'Belloc, Hilaire', 'Bellow, Saul', 'Benchley, Robert', 'Benenson, Peter', 'Ben-Gurion, David', 'Benjamin, Walter', 'Benn, Tony', 'Bennington, Chester', 'Benson, Leana', 'Bent, Silas', 'Bentsen, Lloyd', 'Berger, Ric', 'Bergman, Ingmar', 'Berio, Luciano', 'Berle, Milton', 'Berlin, Irving', 'Berne, Eric', 'Bernhard, Sandra', 'Berra, Yogi', 'Berry, Halle', 'Berry, Wendell', 'Bethea, Erin', 'Bevan, Aneurin', 'Bevel, Ken', 'Biden, Joseph', 'Bierce, Ambrose', 'Biko, Steve', 'Billings, Josh', 'Biondo, Frank', 'Birrell, Augustine', 'Black, Elk', 'Blair, Robert', 'Blair, Tony', 'Blake, William'];
 
-    // Array.prototype.filter()
+    // Array.prototype.filter() 
+    // method creates a new array with all elements that pass the test implemented by the provided function.
+
     // 1. Filter the list of inventors for those who were born in the 1500's
+    let inventorsBornInFifteenHundreds = inventors.filter(function(inventor){
+      //Return true to keep the element, false otherwise.
+      return inventor.year >= 1500 && inventor.year < 1600;
+    });
+    console.log("list of inventors for those who were born in the 1500's: ");
+    console.table(inventorsBornInFifteenHundreds);
+    
 
     // Array.prototype.map()
+    // calls a provided callback function once for each element in an array, in order, and constructs a new array from the results.
+
     // 2. Give us an array of the inventors' first and last names
+    let inventorsFirstLastNames = inventors.map(function(inventor){
+      return inventor.first + ' ' +inventor.last;
+    });
+    console.log("array of the inventors' first and last names", inventorsFirstLastNames);
+    
 
-    // Array.prototype.sort()
+    // Array.prototype.sort() sorts the elements of an array in place and returns the array. The default sort order is built upon converting the elements into strings, then comparing their sequences of UTF-16 code units values
+    // callback function(a, b) {return a - b;} can be used to provide control over the compared criterion, where a is the first and b is the second item being compared each time. The result dictates the order of the new indexes. To reverse the order ASC -> DESC, use b - a
+
     // 3. Sort the inventors by birthdate, oldest to youngest
+    inventors.sort(function(inventorA,inventorB){
+      return inventorA.year - inventorB.year; // ASC order
+    });
+    console.log('Inventors sorted by birthdate oldest to youngest:');
+    console.table(inventors);
+    
 
-    // Array.prototype.reduce()
+    // Array.prototype.reduce() method executes a reducer function (that you provide) on each member of the array resulting in a single output value.
     // 4. How many years did all the inventors live?
+    let reducerFunction  = function(acc,cur,idx,src){
+      let yearsLived = cur.passed - cur.year;
+      return acc + yearsLived; // this is returned with each iteration, but the acc retains the value from last loop
+    }
+
+    let totalYears = inventors.reduce(reducerFunction, 0); // 0 is the initial value of the accumulator. If no initial value is supplied, the first element in the array will be used. The callback function reducerFunction is executed once for each element present in the array
+
+    console.log('Total years the inventors lived: ', totalYears);
+    
 
     // 5. Sort the inventors by years lived
+    inventors.sort(function(inventorA,inventorB){
+      return (inventorA.passed-inventorA.year) - (inventorB.passed-inventorB.year); // ASC order
+    });
+    console.log('Inventors sorted by years lived: ASC');
+    console.table(inventors);
 
     // 6. create a list of Boulevards in Paris that contain 'de' anywhere in the name
     // https://en.wikipedia.org/wiki/Category:Boulevards_in_Paris
 
+    // LESSON: querySelectorAll returns a NodeList, which does not have .map method since it is not an array
+    // can use [...theResultingNodeList] or Array.from(theResultingNodeList) to convert it to and array.
+    
+    // let catList = document.querySelector('.mw-category');
+    // let links = catList.querySelectorAll('a'); // querySelectorAll can be called on any DOM element
+    // let linksArray = Array.from(catList.querySelectorAll('a'));
+    // let linksTexts = linksArray.map(function(link){
+    //   return link.textContent;
+    // });
+    // let boulevardsWithDe = linksTexts.filter(function(boulevard){
+    //   //Return true to keep the element, false otherwise.
+    //   return boulevard.includes('de');
+    // });
+    // console.log(boulevardsWithDe);
+    
 
     // 7. sort Exercise
     // Sort the people alphabetically by last name
